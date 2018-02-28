@@ -153,6 +153,18 @@ readme() {
     git --git-dir "$dotfiles_dir" checkout --quiet
 }
 
+listall() {
+    git --git-dir "$dotfiles_dir" ls-tree --full-tree -r --name-only HEAD "$@"
+}
+
+listtree() {
+    if hash treeify 2>/dev/null; then
+        git --git-dir "$dotfiles_dir" ls-tree --full-tree -r --name-only HEAD "$@" | treeify
+    else
+        git --git-dir "$dotfiles_dir" listall "$@"
+    fi
+}
+
 # Main
 
 if [ -n "$1" ]; then
@@ -177,6 +189,12 @@ case $dot_cmd in
         ;;
     readme)
         $dot_cmd
+        ;;
+    listall)
+        listall "$@"
+        ;;
+    listtree)
+        listtree "$@"
         ;;
     *)
         git --git-dir="$dotfiles_dir" $dot_cmd "$@"
