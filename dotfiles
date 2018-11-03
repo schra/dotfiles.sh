@@ -200,6 +200,10 @@ case $dot_cmd in
     readme)
         $dot_cmd
         ;;
+    --)
+        export GIT_DIR="$dotfiles_dir"
+        ${EDITOR:-vim} "$@"
+        ;;
     *)
         git --git-dir="$dotfiles_dir" $dot_cmd "$@"
 esac
