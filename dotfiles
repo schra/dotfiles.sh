@@ -159,7 +159,8 @@ edit_info() {
     else
         printf '%s\n' "$@" >> "$infofile"
     fi
-    git --git-dir="$dotfiles_dir" update-index --add --cacheinfo 10064,$(git --git-dir="$dotfiles_dir" hash-object -w "$infofile"),"$dotfile"
+    git --git-dir="$dotfiles_dir" update-index --add \
+        --cacheinfo 10064,"$(git --git-dir="$dotfiles_dir" hash-object -w "$infofile")","$dotfile"
     git --git-dir "$dotfiles_dir" checkout --quiet
 }
 
